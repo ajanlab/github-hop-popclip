@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+__MACOSX/
+._*
+
+# Editor
+*.swp
+*.swo
+*~
+
+# PopClip build artifact (source lives in .popclipext/)
+*.popclipextz
+
+# Python
+__pycache__/
+*.pyc
