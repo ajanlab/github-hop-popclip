@@ -2,6 +2,8 @@
 
 [中文](./README.zh-CN.md) | English
 
+![](./assets/github-hop-demo.gif)
+
 Select any text → instantly jump to its GitHub repo homepage.
 
 ## Features

@@ -2,6 +2,8 @@
 
 [English](./README.md) | 中文
 
+![](./assets/github-hop-demo.gif)
+
 划词一键直达 GitHub 仓库首页。选中项目名 → 直达 GitHub。
 
 ## 功能
