@@ -13,7 +13,7 @@ Select any text → instantly jump to its GitHub repo homepage.
 
 ## Installation
 
-1. Download `github-hop.popclipextz`
+1. Download the latest `github-hop.popclipextz` from the [Releases page](https://github.com/ajanlab/github-hop-popclip/releases)
 2. Double-click to install into PopClip
 3. Select any text → click the GitHub icon in PopClip's toolbar
 

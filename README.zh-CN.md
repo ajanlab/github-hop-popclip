@@ -13,7 +13,7 @@
 
 ## 安装
 
-1. 下载 `github-hop.popclipextz`
+1. 从 [Releases 页面](https://github.com/ajanlab/github-hop-popclip/releases) 下载最新的 `github-hop.popclipextz`
 2. 双击安装到 PopClip
 3. 选中任意文本 → 点击 PopClip 工具栏的 GitHub 图标
 
