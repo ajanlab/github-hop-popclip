@@ -8,8 +8,8 @@ __MACOSX/
 *.swo
 *~
 
-# PopClip build artifact (source lives in .popclipext/)
-*.popclipextz
+# PopClip build artifact (kept in repo for direct download)
+# *.popclipextz
 
 # Python
 __pycache__/
