@@ -9,7 +9,7 @@
 ## 功能
 
 - **`owner/repo` 格式**（如 `facebook/react`）→ 零延迟直跳仓库页
-- **项目名**（如 `lodash`）→ GitHub Search API 智能解析 → 跳转最佳匹配仓库
+- **项目名**（如 `lodash`）→ GitHub Search API `in:name` 查询，仅当精确名称唯一匹配时自动跳转，否则打开搜索页
 - **作者名**（如 `@ajanlab`）→ 自动去 `@` 后搜索
 - **兜底** → API 失败/限流/超时 → 自动降级到 GitHub 搜索结果页
 
@@ -19,25 +19,35 @@
 2. 双击安装到 PopClip
 3. 选中任意文本 → 点击 PopClip 工具栏的 GitHub 图标
 
-系统要求：macOS 10.15+，PopClip 2023+
+系统要求：macOS 10.15+，PopClip 2023+，python3（Xcode CLT 或 Homebrew）
+
+### 从源码构建
+
+```bash
+cd github-hop.popclipext/
+# 编辑 Config.yaml 或 Source/github-hop.sh
+cd ..
+zip -r github-hop.popclipextz github-hop.popclipext/
+# 双击生成的 .popclipextz 安装
+```
 
 ## 工作原理
 
 ```
 选中文本 → 清洗(去引号/去@) → owner/repo? ─是→ 直跳 (0ms)
-                                └否→ API 请求 (5s 超时)
-                                      ├─ 精确匹配 → 仓库页
-                                      ├─ 智能匹配 → 仓库页
+                                └否→ API in:name 查询 (5s 超时)
+                                      ├─ 1 个精确名称匹配 → 仓库页
+                                      ├─ 0 或 2+ 个匹配 → 搜索页（让用户选择）
                                       └─ 失败/限流 → 搜索页
 ```
 
 ## 隐私说明
 
-- **不上传任何数据**：仅向 GitHub 公开 API 发送你通过 PopClip 主动选中的文本
+- **仅发送至 GitHub API** — 仅向 GitHub 公开搜索 API 发送你通过 PopClip 选中的文本。无第三方服务器、无分析追踪。
 - **不收集分析数据**：无遥测、无埋点、无第三方端点
 - **不存储任何信息**：无缓存文件、无日志、无状态
 - **不需要任何权限**：无需 API 密钥、无需登录、无需网络授权（PopClip 自动处理）
-- **依赖零外部包**：仅使用 macOS 内置工具（bash, python3, curl, open）
+- **依赖极简** — bash, curl, open（macOS 内置）+ python3（需 Xcode CLT 或 Homebrew）
 
 ## 验证
 
@@ -52,7 +62,8 @@ export POPCLIP_TEXT="facebook/react"
 # 2. 测试项目名 API 解析
 export POPCLIP_TEXT="lodash"
 ./github-hop.popclipext/Source/github-hop.sh
-# 预期：API 查询后打开 https://github.com/lodash/lodash
+# 预期：API 查询后打开 https://github.com/lodash/lodash（唯一名称匹配时；
+# 若多个仓库同名 "lodash"，则打开搜索页）
 
 # 3. 测试 @ 用户名解析
 export POPCLIP_TEXT="@ajanlab"
@@ -62,7 +73,7 @@ export POPCLIP_TEXT="@ajanlab"
 # 4. 测试不存在项目（兜底降级）
 export POPCLIP_TEXT="this-project-does-not-exist-12345"
 ./github-hop.popclipext/Source/github-hop.sh
-# 预期：API 无结果，打开 GitHub 搜索页
+# 预期：API 无结果（或结果不唯一），打开 GitHub 搜索页
 
 # 5. 测试空输入
 export POPCLIP_TEXT=""
